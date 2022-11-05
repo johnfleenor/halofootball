@@ -67,6 +67,8 @@ export class Team{
 
 
 export class Clock {
+
+  public active = false;
   private time  = new Date();  
   minutes:number;
   seconds:number;
@@ -75,6 +77,8 @@ export class Clock {
 
       this.minutes = minutes;
       this.seconds = seconds;
+      this.reset();
+      setInterval(() =>  this.timeGenerate(), 1000);
 
   }
 
@@ -82,12 +86,13 @@ export class Clock {
       var clockStr = this.minutes + ' : ' + this.seconds;
   }
   public start() {
-    this.reset();
-    setInterval(() =>  this.timeGenerate(), 1000);    
+    this.active = true;
+    
+        
   }
 
   public stop(){
-
+    this.active = false;
   }
 
   public reset(){
@@ -96,10 +101,12 @@ export class Clock {
     this.time.setSeconds(0);
   }
 
-  public  timeGenerate() {       
+  public  timeGenerate() {
+    if(this.active){       
     this.time.setSeconds(this.time.getSeconds() +1);
     this.minutes = this.time.getMinutes();
     this.seconds = this.time.getSeconds();
+    }
   
   }
 }
