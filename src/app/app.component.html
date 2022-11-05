@@ -1,0 +1,83 @@
+<div class="d-flex scoreboard">
+  <span class="down"> <img height="40" width="40" src="{{teamaurl}}" /> </span> <span
+    class="team">{{teama.name}}</span> <span class="score">{{teama.score}} </span> <span class="down"> <img height="40" width="40"
+      src="{{teamburl}}"></span> <span
+    class="team">{{teamb.name}}</span><span class="
+score">{{teamb.score}}</span><span class="quarter">{{quarter}}</span><span class="clock">{{timer.minutes |
+    number:'2.'}}:{{timer.seconds | number:'2.'}} </span><span class="down">{{down}} of {{downDistance}}</span>
+
+</div>
+
+<div class="row">
+
+  <div class="card col-6 mt-5">
+    <div class="card-header">
+      Time
+    </div>
+    <div class="card-body d-flex flex-row justify-content-start">
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Quarter
+        </button>
+        <div class="dropdown-menu">
+          <a *ngFor="let q of quarters; index as i" class="dropdown-item" href="#"
+            (click)="quarter = quarters[i].name">{{q.name}}</a>
+
+        </div>
+      </div>
+
+      <button class="btn btn-primary" (click)="Start()"> Start</button>
+      <button class="btn btn-primary" (click)="Stop()"> Stop </button>
+      <button class="btn btn-primary" (click)="Reset()"> Reset </button>
+
+    </div>
+  </div>
+
+  <div class="card col-6 mt-5">
+    <div class="card-header">
+      Downs
+    </div>
+    <div class="card-body d-flex flex-row justify-content-start">
+
+
+      <input class="form-control" title="team a score" type="number" [(ngModel)]="teama.score" />
+      <input class="form-control" title="team b score" type="number" [(ngModel)]="teamb.score" />
+
+      <input class="form-control" title="down" type="number" [(ngModel)]="down" />
+      <input class="form-control" title="distance to first down" type="number" [(ngModel)]="downDistance" />
+
+
+    </div>
+  </div>
+
+</div>
+<div class="row">
+<div class="card col-6 mt-5">
+  <div class="card-header">
+    {{teama.name}}
+  </div>
+  <div class="card-body d-flex flex-row justify-content-start">
+    <button class="btn btn-sm btn-primary" (click)="teama.Touchdown()"> Touchdown </button>
+    <button class="btn btn-sm btn-primary" (click)="teama.FieldGoal()"> Field Goal </button>
+    <button class="btn btn-sm btn-primary" (click)="teama.ExtraPoint()"> ExtraPoint </button>
+    <button class="btn btn-sm btn-primary" (click)="teama.Safety()"> Safety </button>
+  </div>
+</div>
+
+
+<div class="card col-6 mt-5">
+  <div class="card-header">
+    {{teamb.name}}
+  </div>
+  <div class="card-body d-flex flex-row justify-content-start">
+    <button class="btn btn-sm btn-primary" (click)="teamb.Touchdown()"> Touchdown </button>
+    <button class="btn btn-sm btn-primary" (click)="teamb.FieldGoal()"> Field Goal </button>
+    <button class="btn btn-sm btn-primary" (click)="teamb.ExtraPoint()"> ExtraPoint </button>
+    <button class="btn btn-sm btn-primary" (click)="teamb.Safety()"> Safety </button>
+  </div>
+</div>
+
+
+<input class="form-control" title="team a logo" type="text" [(ngModel)]="teamaurl" />
+<input class="form-control" title="team b score" type="text" [(ngModel)]="teamburl" />

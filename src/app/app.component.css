@@ -1,0 +1,33 @@
+.scoreboard {
+    font-size:xx-large;
+}
+
+.team{
+    background-color: blue;
+    color:white;
+    padding: 5px;
+}
+
+.score {
+    background-color: darkblue;
+    color: white;
+    padding: 5px;
+}
+
+.quarter {
+    background-color: black;
+    color: white;
+    padding: 5px;
+}
+
+.clock {
+    background-color: black;
+    color:yellow;
+    padding: 5px;
+}
+
+.down{
+    background-color: black;
+    color:white;
+    padding: 5px;
+}
