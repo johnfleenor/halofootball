@@ -1,24 +1,69 @@
 <div class="d-flex scoreboard">
-  <span class="down"> <img height="40" width="40" src="{{teamaurl}}" /> </span> <span
-    class="team">{{teama.name}}</span> <span class="score">{{teama.score}} </span> <span class="down"> <img height="40" width="40"
+  <span [ngStyle]="{'background-color':teama.color}"> <img [ngStyle]="{'background-color':teama.color}" height="40" width="40" src="{{teamaurl}}" /> </span> <span
+    class="team" [ngStyle]="{'background-color':teama.namecolor}">{{teama.name}}</span> <span class="score">{{teama.score}} </span> <span [ngStyle]="{'background-color':teamb.color}"> <img [ngStyle]="{'background-color':teamb.color}"  height="40" width="40"
       src="{{teamburl}}"></span> <span
-    class="team">{{teamb.name}}</span><span class="
-score">{{teamb.score}}</span><span class="quarter">{{quarter}}</span><span class="clock">{{timer.minutes |
+      [ngStyle]="{'background-color':teamb.namecolor}" class="team">{{teamb.name}}</span><span class="
+score">{{teamb.score}}</span><span class="quarter">{{quarter}}</span><span [ngClass]="IsClose() ? 'clock-close':'clock'" >{{timer.minutes |
     number:'2.'}}:{{timer.seconds | number:'2.'}} </span><span class="down">{{down}} of {{downDistance}}</span>
 
 </div>
-
+<div class="row">
+  <div class="card col-6 mt-5">
+    <div class="card-header">
+      <div class="d-flex flex-row align-items-center ">
+        
+        <input class="form-control" style="width: 60px; " title="{{teama.name}} name color" type="text" [(ngModel)]="teama.namecolor" />
+        <input class="form-control" title="down" type="text" [(ngModel)]="teama.name" />      
+        <input class="form-control" title="{{teama.name}} score" type="number" min="0" [(ngModel)]="teama.score" />
+      </div>
+    </div>
+    <div class="card-body d-flex flex-row justify-content-around">
+      <button class="btn btn-sm btn-primary" (click)="teama.Touchdown()"> Touchdown </button>
+      <button class="btn btn-sm btn-primary" (click)="teama.FieldGoal()"> Field Goal </button>
+      <button class="btn btn-sm btn-primary" (click)="teama.ExtraPoint()"> ExtraPoint </button>
+      <button class="btn btn-sm btn-primary" (click)="teama.Safety()"> Safety </button>
+    </div>
+    <div class="d-flex flex-row align-items-center">
+      
+      <input  style="width: 60px;"  class="form-control" title="team a color" type="text" [(ngModel)]="teama.color" />
+      <input class="form-control" title="{{teama.name}} logo url" type="text" [(ngModel)]="teamaurl" />    
+    </div>
+  </div>
+  
+  
+  <div class="card col-6 mt-5">
+    <div class="card-header">
+      <div class="d-flex flex-row align-items-center">
+        
+      <input class="form-control" style="width: 60px;" title="{{teamb.name}} name color" type="text" [(ngModel)]="teamb.namecolor" />
+      <input class="form-control" title="down" type="text" [(ngModel)]="teamb.name" />    
+      <input class="form-control" title="{{teamb.name}} score" type="number" min="0" [(ngModel)]="teamb.score" />
+      </div>
+    </div>
+    <div class="card-body d-flex flex-row justify-content-around">
+      <button class="btn btn-sm btn-primary" (click)="teamb.Touchdown()"> Touchdown </button>
+      <button class="btn btn-sm btn-primary" (click)="teamb.FieldGoal()"> Field Goal </button>
+      <button class="btn btn-sm btn-primary" (click)="teamb.ExtraPoint()"> ExtraPoint </button>
+      <button class="btn btn-sm btn-primary" (click)="teamb.Safety()"> Safety </button>
+    </div>
+    <div class="d-flex flex-row align-items-center">      
+      <input style="width: 60px; " class="form-control" title="{{teamb.name}} color" type="text" [(ngModel)]="teamb.color" />
+      <input  class="form-control" title="{{teamb.name}} logo url" type="text" [(ngModel)]="teamburl" />    
+    </div>
+  </div>
 <div class="row">
 
   <div class="card col-6 mt-5">
     <div class="card-header">
-      Time
+      <span class="d-flex flex-row justify-content-start align-items-center mr-0">
+      <span>Clock:</span><input class="form-control" title="minutes" type="number" [(ngModel)]="timer.minutes" />:<input class="form-control" title="minutes" type="number" [(ngModel)]="timer.seconds" />
+    </span>
     </div>
-    <div class="card-body d-flex flex-row justify-content-start">
+    <div class="card-body d-flex flex-row justify-content-around align-items-center">
 
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Quarter
+          {{quarter}} Quarter
         </button>
         <div class="dropdown-menu">
           <a *ngFor="let q of quarters; index as i" class="dropdown-item" href="#"
@@ -27,8 +72,14 @@ score">{{teamb.score}}</span><span class="quarter">{{quarter}}</span><span class
         </div>
       </div>
 
-      <button class="btn btn-primary" (click)="Start()"> Start</button>
-      <button class="btn btn-primary" (click)="Stop()"> Stop </button>
+      <button *ngIf="!timer.active" type="button" class="btn btn-primary" (click)="Start()"> Start <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-play-circle" viewBox="0 0 20 20">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>
+      </svg></button>
+      <button *ngIf="timer.active" type="button" class="btn btn-primary" (click)="Stop()"> Stop <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-stop-circle" viewBox="0 0 20 20">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        <path d="M5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3z"/>
+      </svg></button>
       <button class="btn btn-primary" (click)="Reset()"> Reset </button>
 
     </div>
@@ -36,15 +87,13 @@ score">{{teamb.score}}</span><span class="quarter">{{quarter}}</span><span class
 
   <div class="card col-6 mt-5">
     <div class="card-header">
-      Downs
+      <div class="d-flex flex-row align-items-center" >
+      Downs <div style="height:38px"></div>
+      </div>
     </div>
-    <div class="card-body d-flex flex-row justify-content-start">
+    <div class="card-body d-flex flex-row justify-content-around align-items-center" >
 
-
-      <input class="form-control" title="team a score" type="number" [(ngModel)]="teama.score" />
-      <input class="form-control" title="team b score" type="number" [(ngModel)]="teamb.score" />
-
-      <input class="form-control" title="down" type="number" [(ngModel)]="down" />
+      <input class="form-control" title="down" type="number" [(ngModel)]="down" /> <label class="mr-5 ml-5"> of </label>
       <input class="form-control" title="distance to first down" type="number" [(ngModel)]="downDistance" />
 
 
@@ -52,32 +101,8 @@ score">{{teamb.score}}</span><span class="quarter">{{quarter}}</span><span class
   </div>
 
 </div>
-<div class="row">
-<div class="card col-6 mt-5">
-  <div class="card-header">
-    {{teama.name}}
-  </div>
-  <div class="card-body d-flex flex-row justify-content-start">
-    <button class="btn btn-sm btn-primary" (click)="teama.Touchdown()"> Touchdown </button>
-    <button class="btn btn-sm btn-primary" (click)="teama.FieldGoal()"> Field Goal </button>
-    <button class="btn btn-sm btn-primary" (click)="teama.ExtraPoint()"> ExtraPoint </button>
-    <button class="btn btn-sm btn-primary" (click)="teama.Safety()"> Safety </button>
-  </div>
-</div>
 
 
-<div class="card col-6 mt-5">
-  <div class="card-header">
-    {{teamb.name}}
-  </div>
-  <div class="card-body d-flex flex-row justify-content-start">
-    <button class="btn btn-sm btn-primary" (click)="teamb.Touchdown()"> Touchdown </button>
-    <button class="btn btn-sm btn-primary" (click)="teamb.FieldGoal()"> Field Goal </button>
-    <button class="btn btn-sm btn-primary" (click)="teamb.ExtraPoint()"> ExtraPoint </button>
-    <button class="btn btn-sm btn-primary" (click)="teamb.Safety()"> Safety </button>
-  </div>
-</div>
 
 
-<input class="form-control" title="team a logo" type="text" [(ngModel)]="teamaurl" />
-<input class="form-control" title="team b score" type="text" [(ngModel)]="teamburl" />
+
